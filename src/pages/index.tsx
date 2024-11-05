@@ -33,7 +33,7 @@ export default function Home() {
               src/pages/index.tsx
             </code>
             .
-          </li>
+          </li> 
           <li>Save and see your changes instantly.</li>
         </ol>
 

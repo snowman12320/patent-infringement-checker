@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AnalysisResult from '@/components/AnalysisResult'
 import PatentForm from '@/components/PatentForm'
+import styles from '@/pages/index.module.css'
 
 interface FormSubmitData {
   patentId: string;
@@ -84,7 +85,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className={styles.homepageContainer}> {/* 使用 CSS 模組 */}
       <PatentForm onSubmit={handleFormSubmit} />
       <AnalysisResult analysis={analysis} />
     </div>

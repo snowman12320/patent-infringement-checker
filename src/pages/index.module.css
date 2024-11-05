@@ -1,0 +1,9 @@
+.homepageContainer {
+  background-color: white; /* 設定背景顏色為白色 */
+  color: black; /* 設定文字顏色為黑色 */
+}
+
+.homepageContainer input {
+  background-color: white; /* 設定輸入框背景顏色為白色 */
+  color: black; /* 設定輸入框文字顏色為黑色 */
+}

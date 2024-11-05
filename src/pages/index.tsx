@@ -37,7 +37,7 @@ const HomePage: React.FC = () => {
       // Find the specific patent and company
       const patent = patents.find((p: { publication_number: string }) => p.publication_number === patentId)
       const company = companies.find(
-        (c: { name: string }) => c.name.toLowerCase() === companyName.toLowerCase()
+        (c: { name: string }) => new RegExp(`\\b${companyName}\\b`, 'i').test(c.name)
       )
 
       if (!patent) {

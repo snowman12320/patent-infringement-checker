@@ -35,9 +35,9 @@ const HomePage: React.FC = () => {
       const companies = await companiesRes.json()
 
       // Find the specific patent and company
-      const patent = patents.find((p: { patent_id: string }) => p.patent_id === patentId)
+      const patent = patents.find((p: { publication_number: string }) => p.publication_number === patentId)
       const company = companies.find(
-        (c: { company_name: string }) => c.company_name.toLowerCase() === companyName.toLowerCase()
+        (c: { name: string }) => c.name.toLowerCase() === companyName.toLowerCase()
       )
 
       if (!patent) {
@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {
       setAnalysis({
         ...analysisResult,
         patent_id: patentId,
-        company_name: company.company_name,
+        company_name: company.name,
         analysis_date: new Date().toISOString().split('T')[0],
         top_infringing_products: analysisResult.top_infringing_products
       })
@@ -85,7 +85,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className={styles.homepageContainer}> {/* 使用 CSS 模組 */}
+    <div className={styles.homepageContainer}>
       <PatentForm onSubmit={handleFormSubmit} />
       <AnalysisResult analysis={analysis} />
     </div>

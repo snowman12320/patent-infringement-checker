@@ -1,5 +1,4 @@
-{
-  "companies": [
+[
     {
       "name": "Walmart Inc.",
       "products": [
@@ -405,5 +404,4 @@
         }
       ]
     }
-  ]
-}
+]

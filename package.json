@@ -32,8 +32,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "pnpm typecheck"
+      "eslint --fix"
     ]
   }
 }

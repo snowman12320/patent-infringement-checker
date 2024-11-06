@@ -10,7 +10,10 @@ interface FormSubmitData {
 
 interface Product {
   product_name: string;
-  infringement_likelihood: string;
+  infringement_likelihood: 'High' | 'Moderate' | 'Low';
+  relevant_claims: string[];
+  explanation: string;
+  specific_features: string[];
 }
 
 interface Analysis {
@@ -18,6 +21,7 @@ interface Analysis {
   company_name: string;
   analysis_date: string;
   top_infringing_products: Product[];
+  overall_risk_assessment: string;
 }
 
 const HomePage: React.FC = () => {
@@ -52,6 +56,8 @@ const HomePage: React.FC = () => {
 
       // Prepare data for the Gemini API
       const requestData = {
+        patent_id: patentId,
+        company_name: company.name,
         patent_claims: patent.claims,
         company_products: company.products
       }
@@ -70,14 +76,16 @@ const HomePage: React.FC = () => {
       }
 
       const analysisResult = await res.json()
-      console.info(analysisResult)
+      // eslint-disable-next-line no-control-regex
+      const cleanedAnalysisResult = analysisResult.replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+      const analysisObject = JSON.parse(cleanedAnalysisResult)
+      console.log(analysisObject)
 
       setAnalysis({
-        ...analysisResult,
+        ...analysisObject,
         patent_id: patentId,
         company_name: company.name,
-        analysis_date: new Date().toISOString().split('T')[0],
-        top_infringing_products: analysisResult.top_infringing_products
+        analysis_date: new Date().toISOString().split('T')[0]
       })
     } catch (error) {
       console.error(error)
@@ -88,7 +96,7 @@ const HomePage: React.FC = () => {
   return (
     <div className={styles.homepageContainer}>
       <PatentForm onSubmit={handleFormSubmit} />
-      <AnalysisResult analysis={analysis} />
+      {analysis && <AnalysisResult analysis={analysis} />}
     </div>
   )
 }

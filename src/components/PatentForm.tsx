@@ -7,7 +7,7 @@ interface PatentFormProps {
 
 const PatentForm: React.FC<PatentFormProps> = ({ onSubmit }) => {
   const [patentId, setPatentId] = useState<string>('US-RE49889-E1')
-  const [companyName, setCompanyName] = useState<string>('')
+  const [companyName, setCompanyName] = useState<string>('walmart')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import geminiApi from '../../utils/geminiApi'
+import geminiApi from '../../../-utils/geminiApi'
 
 interface GeminiRequest {
   patentClaims: string[];
@@ -23,15 +23,17 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
       // Call the Gemini API
       const geminiResponse: GeminiResponse = await geminiApi.post(
-        '/v1/infringement-check', // Replace with the actual endpoint
+        '/v1/infringement-check', // 請確認這是正確的端點
         geminiRequest
       )
+
+      console.log(geminiResponse)
 
       // Send back the analysis result
       res.status(200).json(geminiResponse.data)
     } catch (error) {
       console.error('Error calling Gemini API:', error)
-      res.status(500).json({ error: 'Failed to perform infringement check.' })
+      // res.status(500).json({ error: 'Failed to perform infringement check.' })
     }
   } else {
     res.status(405).json({ error: 'Method not allowed.' })

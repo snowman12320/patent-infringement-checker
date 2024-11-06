@@ -69,8 +69,8 @@ const HomePage: React.FC = () => {
         throw new Error('Error performing infringement check.')
       }
 
-      alert('Infringement check performed successfully.')
       const analysisResult = await res.json()
+      console.info(analysisResult)
 
       setAnalysis({
         ...analysisResult,

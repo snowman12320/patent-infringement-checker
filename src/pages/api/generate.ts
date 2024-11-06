@@ -17,21 +17,14 @@ export default async function handler (
   }
 
   try {
-    if (req.headers['content-type'] !== 'application/json') {
-      return res.status(400).json({ error: '請求必須是 application/json 格式' })
-    }
-
-    const { prompt } = req.body
-
-    if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({ error: '缺少必要的 prompt 參數' })
-    }
-
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
+    const prompt = 'how are you'
+
     const result = await model.generateContent(prompt)
     const response = await result.response
+    console.info(response.text())
 
     return res.status(200).json({ content: response.text() })
   } catch (error) {

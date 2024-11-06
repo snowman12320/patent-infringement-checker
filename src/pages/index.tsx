@@ -57,18 +57,19 @@ const HomePage: React.FC = () => {
       }
 
       // Call the backend API route
-      const res = await fetch('/api/infringementCheck', {
+      const res = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify({ prompt: requestData })
       })
 
       if (!res.ok) {
         throw new Error('Error performing infringement check.')
       }
 
+      alert('Infringement check performed successfully.')
       const analysisResult = await res.json()
 
       setAnalysis({

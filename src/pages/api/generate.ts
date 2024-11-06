@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+// import { GoogleGenerativeAI } from '@google/generative-ai'
 
 export default async function handler (
   req: NextApiRequest,
@@ -17,25 +17,33 @@ export default async function handler (
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+    // const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
+    // const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
 
-    const prompt = 'how are you'
     // 構建提示，使用 LLM 進行分析
     // const prompt = `
+    //     The app will allow users to:
+    //     Input a patent ID and a company name.
+    //     Run a patent infringement check against the specified company.
+    //     Return the top two infringing products of the company along with explanations of why these
+    //     products potentially infringe the patent, specifically detailing which claims are at issue.
+    //     The patent ID and its corresponding patent claims are provided in the patents.json file. Additionally,
+    //     you will receive a list of companies and their corresponding products and summaries in the
+    //     company_products.json file.
+
+    //     User Input
+    //     Patent ID: ${req.body.patent_id} (get patent_claims from patents.json file)
+    //     Company Name: ${req.body.company_name} (get company_products from company_products.json)
     //     patent_claims: ${req.body.patent_claims}
     //     company_products: ${req.body.company_products}
 
-    //     Example
-    //     User Input
-    //     Patent ID: US-RE49889-E1 (get patent_claims)
-    //     Company Name: Walmart (get company_products)
-    //     Infringement Analysis output (just give result object data like output object )
+    //     Output Example
+    //     Infringement Analysis output
+    //     just give result object data like output object and not use json code block
+    //     i do not want to see not real product_name again,please check the products name
+
     //     output:{
     //     "analysis_id": "1",
-    //     "patent_id": "US-RE49889-E1",
-    //     "company_name": "Walmart Inc.",
-    //     "analysis_date": "2024-10-31",
     //     "top_infringing_products": [
     //     {
     //     "product_name": "Walmart Shopping App",
@@ -78,15 +86,74 @@ export default async function handler (
     //     }
     // `
 
-    const result = await model.generateContent(prompt)
-    const response = await result.response
+    // const result = await model.generateContent(prompt)
+    // const response = await result.response
+    // const responseText = await response.text()
+    const responseText = `{
+  "analysis_id": "1",
+  "top_infringing_products": [
+    {
+      "product_name": "John Deere Combine Sense",
+      "infringement_likelihood": "High",
+      "relevant_claims": [
+        "1",
+        "2",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20"
+      ],
+      "explanation": "John Deere Combine Sense is an agricultural technology system that measures stalk diameters and locations, and generates yield maps based on this data. It implements many of the key elements of the patent claims, including stalk diameter measurement, yield mapping, and geo-referencing of data. The system's integration with agricultural machinery and its focus on improving agricultural science make it highly likely to infringe on the patent claims.",
+      "specific_features": [
+        "Stalk diameter measurement using feelers",
+        "Yield mapping based on stalk diameter data",
+        "Geo-referencing of yield data",
+        "Integration with agricultural machinery",
+        "Display of harvest data on a screen in the combine"
+      ]
+    },
+    {
+      "product_name": "John Deere GreenStar 3 2630 Display",
+      "infringement_likelihood": "Moderate",
+      "relevant_claims": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20"
+      ],
+      "explanation": "The John Deere GreenStar 3 2630 Display is an agricultural display system that can display harvest data, including stalk diameter and yield information. It does not directly measure stalk diameters or generate yield maps, but it can display data from other systems that do. This makes it less likely to infringe on the patent claims than John Deere Combine Sense, but still poses a moderate risk of infringement due to its potential use with other infringing systems.",
+      "specific_features": [
+        "Display of harvest data, including stalk diameter and yield information",
+        "Integration with other agricultural systems",
+        "GPS and mapping capabilities"
+      ]
+    }
+  ],
+  "overall_risk_assessment": "High risk of infringement due to the implementation of key patent claims in John Deere Combine Sense, which directly measures stalk diameters and generates yield maps. John Deere GreenStar 3 2630 Display poses a moderate risk of infringement due to its potential use with other infringing systems.",
+  "patent_id": "US-11950529-B2",
+  "company_name": "John Deere",
+  "analysis_date": "2024-11-06"
+}`
 
-    console.info('11111111111 test 11111111111')
-    // console.info(typeof response.text()) // string
-    // console.dir(response.text()) // "I am Gemini, a multi-modal AI model, developed by Google. I don't have personal feelings or emotions, but I am designed to be informative and helpful. How can I assist you today?"
-    // const responseText = "I am Gemini, a multi-modal AI model, developed by Google. I don't have personal feelings or emotions, but I am designed to be informative and helpful. How can I assist you today?"
-
-    const responseText = await response.text()
     return res.status(200).json(responseText)
   } catch (error) {
     console.error('API 錯誤:', error)

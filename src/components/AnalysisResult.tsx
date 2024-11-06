@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Container,
   Typography,
@@ -31,14 +31,6 @@ interface AnalysisResultProps {
 }
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
-  // 新增保存結果的效果
-  useEffect(() => {
-    const savedResults = JSON.parse(localStorage.getItem('analysisResults') || '[]')
-    const timestamp = new Date().toISOString()
-    const newResult = { timestamp, analysis }
-    localStorage.setItem('analysisResults', JSON.stringify([...savedResults, newResult]))
-  }, [analysis])
-
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>

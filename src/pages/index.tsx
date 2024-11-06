@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ prompt: requestData })
+        body: JSON.stringify(requestData)
       })
 
       if (!res.ok) {
@@ -81,7 +81,7 @@ const HomePage: React.FC = () => {
       })
     } catch (error) {
       console.error(error)
-      alert('An error occurred during the infringement check.')
+      // alert('An error occurred during the infringement check.')
     }
   }
 

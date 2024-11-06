@@ -12,6 +12,9 @@ const Navbar = () => {
           <Link href="/" className={styles.navLink}>
             首頁
           </Link>
+          <Link href="/reports" className={styles.navLink}>
+            歷史報告
+          </Link>
           <Link href="/about" className={styles.navLink}>
             關於
           </Link>

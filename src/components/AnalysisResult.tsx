@@ -7,7 +7,8 @@ import {
   CardContent,
   Grid,
   Chip,
-  Box
+  Box,
+  Button
 } from '@mui/material'
 
 interface Product {
@@ -31,14 +32,61 @@ interface AnalysisResultProps {
 }
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
+  const handleDownload = () => {
+    const fileName = `patent-analysis-${analysis.patent_id}-${analysis.analysis_date}.json`
+    const jsonStr = JSON.stringify(analysis, null, 2)
+    const blob = new Blob([jsonStr], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = fileName
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+  const handleSaveReport = () => {
+    try {
+      const reports = JSON.parse(localStorage.getItem('patentReports') || '[]')
+      const reportWithId = {
+        ...analysis,
+        id: Date.now(), // 使用時間戳作為唯一ID
+        savedAt: new Date().toISOString()
+      }
+      reports.push(reportWithId)
+      localStorage.setItem('patentReports', JSON.stringify(reports))
+      alert('報告已成功儲存！')
+    } catch (error) {
+      console.error('儲存報告失敗：', error)
+      alert('儲存報告時發生錯誤')
+    }
+  }
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom color="primary">
-          專利侵權分析結果
-        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h4" gutterBottom color="primary">
+            專利侵權分析結果
+          </Typography>
+          <Box>
+            <Button
+              variant="contained"
+              onClick={handleSaveReport}
+              sx={{ mr: 2 }}
+            >
+              儲存報告
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={handleDownload}
+            >
+              下載報告
+            </Button>
+          </Box>
+        </Box>
 
-        {/* 新增基本資訊區塊 */}
         <Box sx={{ mb: 4 }}>
           <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>專利編號：</strong> {analysis.patent_id}
@@ -80,7 +128,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
                   </Typography>
 
                   <Typography variant="body1" paragraph>
-                    <strong>說明：</strong>
+                    <strong>��明：</strong>
                     {product.explanation}
                   </Typography>
 

@@ -40,7 +40,7 @@ export default async function handler (
         Output Example
         Infringement Analysis output
         just give result object data like output object and not use json code block.
-        please enter the full product name from ${req.body.company_products.products} into the product_name field without adding any extra words. Ensure that the product name is included in req.body.company_products.products[whatever].name
+        please enter the full product name from ${req.body.company_products.products} into the product_name field without adding any extra words. Ensure that the product name is included in req.body.company_products.products.name
 
         output:{
         "analysis_id": ${uuidv4()},

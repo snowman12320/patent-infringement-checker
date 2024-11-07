@@ -86,18 +86,35 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
             <Typography variant="h4" gutterBottom color="primary">
               Patent Infringement Analysis Results
             </Typography>
+            <Typography variant="body2" color="error" style={{ marginBottom: '16px' }}>
+              Note: This AI model is being adjusted. If there are any inaccuracies, please try again. Thank you. For reference only.
+            </Typography>
             <Box>
               {!isReportsPage && (
                 <Button
                   variant="contained"
+                  sx={{
+                    backgroundColor: '#57dc2f', // 修改這行
+                    mr: 2,
+                    '&:hover': {
+                      backgroundColor: '#45b824' // 修改這行
+                    }
+                  }}
                   onClick={handleSaveReport}
-                  sx={{ mr: 2 }}
                 >
                   Save Report
                 </Button>
               )}
               <Button
                 variant="outlined"
+                sx={{
+                  borderColor: '#57dc2f', // 修改這行
+                  color: '#57dc2f', // 修改這行
+                  '&:hover': {
+                    borderColor: '#45b824', // 修改這行
+                    color: '#45b824' // 修改這行
+                  }
+                }}
                 onClick={handleDownload}
               >
                 Download Report

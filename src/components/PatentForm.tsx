@@ -154,15 +154,18 @@ const PatentForm: React.FC = () => {
               <Button
                 type="submit"
                 variant="contained"
-                color="primary"
+                sx={{
+                  backgroundColor: '#57dc2f', // 修改這行
+                  mt: 2,
+                  py: 1.5,
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    backgroundColor: '#45b824' // 修改這行
+                  }
+                }}
                 fullWidth
                 size="large"
                 disabled={isSubmitting}
-                sx={{
-                  mt: 2,
-                  py: 1.5,
-                  fontWeight: 'bold'
-                }}
               >
                 {isSubmitting ? 'Processing...' : 'Submit'}
               </Button>

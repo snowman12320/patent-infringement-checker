@@ -12,10 +12,9 @@ This app allows users to input a patent ID and a company name to perform a paten
 
 ### Running Locally
 
-1. **Clone the Repository**
+1. **Unpack zip**
 
    ```bash
-   git clone https://github.com/snowman12320/patent-infringement-checker.git
    cd patent-infringement-checker
    ```
 
@@ -45,19 +44,33 @@ This app allows users to input a patent ID and a company name to perform a paten
 
 ### Running with Docker
 
-1. **Build the Docker Image**
+1. **Unpack zip**
+
+   ```bash
+   cd patent-infringement-checker
+   ```
+
+2. **Build the Docker Image**
 
    ```bash
    docker build -t patent-infringement-checker .
    ```
 
-2. **Run the Docker Container**
+3. **Set Up Environment Variables**
+
+   Create a `.env` file in the root directory and add your Gemini API key.
+
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+
+4. **Run the Docker Container**
 
    ```bash
    docker run -p 3000:3000 --env-file .env patent-infringement-checker
    ```
 
-3. **Open the App**
+5. **Open the App**
 
    Visit [http://localhost:3000](http://localhost:3000) in your browser.
 

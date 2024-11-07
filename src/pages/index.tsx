@@ -30,7 +30,6 @@ const HomePage: React.FC = () => {
 
   const handleFormSubmit = async ({ patentId, companyName }: FormSubmitData) => {
     try {
-      // Fetch patent and company data
       const [patentsRes, companiesRes] = await Promise.all([
         fetch('/api/patents'),
         fetch('/api/companyProducts')
@@ -39,7 +38,6 @@ const HomePage: React.FC = () => {
       const patents = await patentsRes.json()
       const companies = await companiesRes.json()
 
-      // Find the specific patent and company
       const patent = patents.find((p: { publication_number: string }) => p.publication_number === patentId)
       const company = companies.find(
         (c: { name: string }) => new RegExp(`\\b${companyName}\\b`, 'i').test(c.name)
@@ -55,7 +53,6 @@ const HomePage: React.FC = () => {
         return
       }
 
-      // Prepare data for the Gemini API
       const requestData = {
         patent_id: patentId,
         company_name: company.name,
@@ -63,7 +60,6 @@ const HomePage: React.FC = () => {
         company_products: company.products
       }
 
-      // Call the backend API route
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: {

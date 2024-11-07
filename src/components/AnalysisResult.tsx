@@ -51,7 +51,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
       const reports = JSON.parse(localStorage.getItem('patentReports') || '[]')
       const reportWithId = {
         ...analysis,
-        id: Date.now(), // 使用時間戳作為唯一ID
+        id: Date.now(),
         savedAt: new Date().toISOString()
       }
       reports.push(reportWithId)

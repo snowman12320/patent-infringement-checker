@@ -1,40 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Patent Infringement Check App
 
-## Getting Started
+## Introduction
+This app allows users to input a patent ID and a company name to perform a patent infringement check against the specified company. It returns the top two infringing products along with explanations of why these products potentially infringe the patent.
 
-First, run the development server:
+## Prerequisites
+- Node.js and pnpm installed
+- Docker installed (optional, for running with Docker)
+- Access to the Gemini API with a valid API key
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How to Run the App
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Running Locally
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. **Clone the Repository**
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   ```bash
+   git clone https://github.com/snowman12320/patent-infringement-checker.git
+   cd patent-infringement-checker
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+2. **Install Dependencies**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+3. **Set Up Environment Variables**
 
-To learn more about Next.js, take a look at the following resources:
+   Create a `.env` file in the root directory and add your Gemini API key.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Run the Development Server**
 
-## Deploy on Vercel
+   ```bash
+   pnpm dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Open the App**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+   Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Running with Docker
+
+1. **Build the Docker Image**
+
+   ```bash
+   docker build -t patent-infringement-checker .
+   ```
+
+2. **Run the Docker Container**
+
+   ```bash
+   docker run -p 3000:3000 --env-file .env patent-infringement-checker
+   ```
+
+3. **Open the App**
+
+   Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Notes
+- Ensure `patents.json` and `company_products.json` are placed in the `data` directory.
+- Replace `your_gemini_api_key_here` with your actual Gemini API key.
+- For any issues, please check the console logs for more details.

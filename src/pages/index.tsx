@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Navbar from '@/components/Navbar'
 import AnalysisResult from '@/components/AnalysisResult'
 import PatentForm from '@/components/PatentForm'
 import styles from '@/pages/index.module.css'
@@ -94,10 +95,13 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className={styles.homepageContainer}>
-      <PatentForm onSubmit={handleFormSubmit} />
-      {analysis && <AnalysisResult analysis={analysis} />}
-    </div>
+    <>
+      <Navbar />
+      <div className={styles.homepageContainer}>
+        <PatentForm onSubmit={handleFormSubmit} />
+        {analysis && <AnalysisResult analysis={analysis} />}
+      </div>
+    </>
   )
 }
 

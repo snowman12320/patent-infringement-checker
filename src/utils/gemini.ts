@@ -24,6 +24,7 @@ export async function fetchGeneratedContent (prompt: {
 
     return analysisObject
   } catch (error) {
+    alert('please try again or contact support team')
     console.error('Error:', error)
     throw error
   }

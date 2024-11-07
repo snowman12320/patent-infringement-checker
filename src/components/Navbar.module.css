@@ -14,15 +14,15 @@
 
 .rightBlock{
   display: flex;
-  align-items: center;
 }
 
 .navLink {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  display: inline-block;
   display: flex;
+  align-items: center;
+
 }
 
 .navLink:hover {

@@ -11,20 +11,20 @@ const Navbar = () => {
       <div className={styles.navContainer}>
         <Link href="/" className={styles.navLink}>
           <GavelIcon sx={{ mr: 1 }} />
-          專利侵權檢查器
+          Patent Infringement Checker
         </Link>
         <div className={styles.rightBlock}>
           <Link href="/" className={styles.navLink}>
             <HomeIcon sx={{ mr: 1 }} />
-            首頁
+            Home
           </Link>
           <Link href="/reports" className={styles.navLink}>
             <HistoryIcon sx={{ mr: 1 }} />
-            歷史報告
+            History Reports
           </Link>
           <Link href="/about" className={styles.navLink}>
             <InfoIcon sx={{ mr: 1 }} />
-            關於
+            About
           </Link>
         </div>
       </div>

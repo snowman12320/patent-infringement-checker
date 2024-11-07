@@ -32,7 +32,7 @@ const ReportsPage = () => {
   }, [])
 
   const handleDelete = (id: number) => {
-    if (window.confirm('確定要刪除此報告？')) {
+    if (window.confirm('Are you sure you want to delete this report?')) {
       const updatedReports = reports.filter(report => report.id !== id)
       localStorage.setItem('patentReports', JSON.stringify(updatedReports))
       setReports(updatedReports)
@@ -49,12 +49,12 @@ const ReportsPage = () => {
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Paper elevation={3} sx={{ p: 3 }}>
           <Typography variant="h4" gutterBottom color="primary">
-            歷史分析報告
+            Analysis History Reports
           </Typography>
           {reports.length === 0
             ? (
             <Typography variant="body1" sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>
-              目前尚無儲存分析報告
+              No saved analysis reports yet
             </Typography>
               )
             : (
@@ -74,8 +74,8 @@ const ReportsPage = () => {
                   }
                 >
                   <ListItemText
-                    primary={`專利 ${report.patent_id} - ${report.company_name}`}
-                    secondary={`分析日期: ${new Date(report.analysis_date).toLocaleString('zh-TW', { hour12: false })}`}
+                    primary={`Patent ${report.patent_id} - ${report.company_name}`}
+                    secondary={`Analysis Date: ${new Date(report.analysis_date).toLocaleString('en-US', { hour12: false })}`}
                   />
                 </ListItem>
               ))}

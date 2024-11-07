@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPatentId, setCompanyName, setIsSubmitting, resetForm } from '@/store/formSlice'
 import { setAnalysis, setLoading, setError } from '@/store/patentSlice'
@@ -16,6 +16,7 @@ import {
   styled
 } from '@mui/material'
 import { fetchGeneratedContent } from '@/utils/gemini'
+import ConfirmDialog from '@/components/ConfirmDialog'
 
 const AnimatedBackdrop = styled(Backdrop)`
   background-image: linear-gradient(-45deg, #e94235, #4286f5, #34a853, #fbbb06) !important;
@@ -36,6 +37,8 @@ const AnimatedBackdrop = styled(Backdrop)`
 const PatentForm: React.FC = () => {
   const dispatch = useDispatch()
   const { patentId, companyName, isSubmitting } = useSelector((state: RootState) => state.form)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogMessage, setDialogMessage] = useState('')
 
   const handleFormSubmit = async ({ patentId, companyName }: { patentId: string, companyName: string }) => {
     try {
@@ -56,14 +59,18 @@ const PatentForm: React.FC = () => {
       )
 
       if (!patent) {
-        alert('Patent not found.')
+        setDialogMessage('Patent ID does not exist.')
+        setDialogOpen(true)
         return
       }
 
       if (!company) {
-        alert('Company not found.')
+        setDialogMessage('Company name does not exist.')
+        setDialogOpen(true)
         return
       }
+
+      dispatch(setIsSubmitting(true))
 
       const requestData = {
         patent_id: patentId,
@@ -90,10 +97,7 @@ const PatentForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    dispatch(setIsSubmitting(true))
-
     try {
-      await new Promise((resolve) => setTimeout(resolve, 3000))
       await handleFormSubmit({ patentId, companyName })
       dispatch(resetForm())
     } finally {
@@ -125,6 +129,7 @@ const PatentForm: React.FC = () => {
                 label="Patent ID"
                 value={patentId}
                 onChange={(e) => dispatch(setPatentId(e.target.value))}
+                placeholder="ex. US-11950529-B2"
                 fullWidth
                 required
                 margin="normal"
@@ -137,6 +142,7 @@ const PatentForm: React.FC = () => {
                 label="Company Name"
                 value={companyName}
                 onChange={(e) => dispatch(setCompanyName(e.target.value))}
+                placeholder="ex. Walmart Inc."
                 fullWidth
                 required
                 margin="normal"
@@ -158,12 +164,19 @@ const PatentForm: React.FC = () => {
                   fontWeight: 'bold'
                 }}
               >
-                {isSubmitting ? '處理中...' : '提交'}
+                {isSubmitting ? 'Processing...' : 'Submit'}
               </Button>
             </form>
           </Paper>
         </Box>
       </Container>
+
+      <ConfirmDialog
+        open={dialogOpen}
+        title="Notice"
+        content={dialogMessage}
+        onClose={() => setDialogOpen(false)}
+      />
     </>
   )
 }

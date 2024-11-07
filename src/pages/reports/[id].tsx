@@ -42,7 +42,7 @@ const ReportDetail: React.FC = () => {
     return (
       <>
         <Navbar />
-        <div>載入中...</div>
+        <div>Loading...</div>
       </>
     )
   }

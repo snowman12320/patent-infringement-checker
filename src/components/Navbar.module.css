@@ -16,6 +16,7 @@
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
+  vertical-align:middle;
 }
 
 .navLink:hover {

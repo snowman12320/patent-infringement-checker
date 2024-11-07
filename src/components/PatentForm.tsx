@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPatentId, setCompanyName, setIsSubmitting, resetForm } from '@/store/formSlice'
 import { setAnalysis, setLoading, setError } from '@/store/patentSlice'
 import { RootState } from '@/store/store'
+
 import {
   Container,
   TextField,
@@ -14,6 +15,7 @@ import {
   CircularProgress,
   styled
 } from '@mui/material'
+import { fetchGeneratedContent } from '@/utils/gemini'
 
 const AnimatedBackdrop = styled(Backdrop)`
   background-image: linear-gradient(-45deg, #e94235, #4286f5, #34a853, #fbbb06) !important;
@@ -70,23 +72,7 @@ const PatentForm: React.FC = () => {
         company_products: company.products
       }
 
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      })
-
-      if (!res.ok) {
-        throw new Error('Error performing infringement check.')
-      }
-
-      const analysisResult = await res.json()
-      // eslint-disable-next-line no-control-regex
-      const cleanedAnalysisResult = analysisResult.replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
-      const analysisObject = JSON.parse(cleanedAnalysisResult)
-      console.log(analysisObject)
+      const analysisObject = await fetchGeneratedContent(requestData)
 
       dispatch(setAnalysis({
         ...analysisObject,

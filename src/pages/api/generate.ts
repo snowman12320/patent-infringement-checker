@@ -14,7 +14,7 @@ export default async function handler (
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: '只允許 POST 請求' })
+    return res.status(405).json({ error: 'Only allow POST requests' })
   }
 
   try {
@@ -40,7 +40,7 @@ export default async function handler (
         Output Example
         Infringement Analysis output
         just give result object data like output object and not use json code block.
-        please enter the full product name from ${req.body.company_products.products} into the product_name field without adding any extra words. Ensure that the product name is included in ${req.body.company_products.products}.
+        please enter the full product name from ${req.body.company_products.products} into the product_name field without adding any extra words. Ensure that the product name is included in req.body.company_products.products[whatever].name
 
         output:{
         "analysis_id": ${uuidv4()},
@@ -92,7 +92,7 @@ export default async function handler (
 
     return res.status(200).json(responseText)
   } catch (error) {
-    console.error('API 錯誤:', error)
-    return res.status(500).json({ error: '生成內容失敗' })
+    console.error('API error:', error)
+    return res.status(500).json({ error: 'Failed to generate content' })
   }
 }

@@ -1,21 +1,30 @@
-export async function fetchGeneratedContent (prompt: string) {
+export async function fetchGeneratedContent (prompt: {
+  patent_id: string,
+  company_name: string,
+  patent_claims: string,
+  company_products: string
+}) {
   try {
-    const response = await fetch('/api/generate', {
+    const res = await fetch('/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify(prompt)
     })
 
-    if (!response.ok) {
-      throw new Error('API 請求失敗')
+    if (!res.ok) {
+      throw new Error('Error performing infringement check.')
     }
 
-    const data = await response.json()
-    return data
+    const analysisResult = await res.json()
+    // eslint-disable-next-line no-control-regex
+    const cleanedAnalysisResult = analysisResult.replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+    const analysisObject = JSON.parse(cleanedAnalysisResult)
+
+    return analysisObject
   } catch (error) {
-    console.error('錯誤:', error)
+    console.error('Error:', error)
     throw error
   }
 }

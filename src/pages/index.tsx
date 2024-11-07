@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAnalysis, setLoading, setError } from '@/store/patentSlice'
 import { RootState } from '@/store/store'
@@ -15,7 +15,6 @@ interface FormSubmitData {
 const HomePage: React.FC = () => {
   const dispatch = useDispatch()
   const analysis = useSelector((state: RootState) => state.patent.analysis)
-  const [formKey, setFormKey] = useState(0)
 
   const handleFormSubmit = async ({ patentId, companyName }: FormSubmitData) => {
     try {
@@ -76,8 +75,6 @@ const HomePage: React.FC = () => {
         company_name: company.name,
         analysis_date: new Date().toISOString().split('T')[0]
       }))
-
-      setFormKey(prev => prev + 1)
     } catch (error) {
       console.error(error)
       dispatch(setError('An error occurred during the infringement check.'))
@@ -90,7 +87,7 @@ const HomePage: React.FC = () => {
     <>
       <Navbar />
       <div className={styles.homepageContainer}>
-        <PatentForm key={formKey} onSubmit={handleFormSubmit} />
+        <PatentForm onSubmit={handleFormSubmit} />
         {analysis && <AnalysisResult analysis={analysis} />}
       </div>
     </>

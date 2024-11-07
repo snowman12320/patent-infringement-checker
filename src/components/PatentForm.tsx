@@ -1,4 +1,7 @@
-import React, { useState, FormEvent } from 'react'
+import React, { FormEvent } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPatentId, setCompanyName, setIsSubmitting, resetForm } from '@/store/formSlice'
+import { RootState } from '@/store/store'
 import {
   Container,
   TextField,
@@ -7,40 +10,58 @@ import {
   Typography,
   Box,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  styled
 } from '@mui/material'
+
+const AnimatedBackdrop = styled(Backdrop)`
+  background-image: linear-gradient(-45deg, #e94235, #4286f5, #34a853, #fbbb06) !important;
+  background-size: 400% 400% !important;
+  animation: gradient-background 4s ease infinite;
+  opacity: 0.7 !important;
+
+  @keyframes gradient-background {
+    0%, 100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+  }
+`
 
 interface PatentFormProps {
   onSubmit: (data: { patentId: string, companyName: string }) => Promise<void>
 }
 
 const PatentForm: React.FC<PatentFormProps> = ({ onSubmit }) => {
-  const [patentId, setPatentId] = useState<string>('US-11950529-B2')
-  const [companyName, setCompanyName] = useState<string>('John Deere')
-  const [loading, setLoading] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const { patentId, companyName, isSubmitting } = useSelector((state: RootState) => state.form)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
+    dispatch(setIsSubmitting(true))
+
     try {
+      await new Promise((resolve) => setTimeout(resolve, 3000))
       await onSubmit({ patentId, companyName })
+      dispatch(resetForm())
     } finally {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setLoading(false)
+      dispatch(setIsSubmitting(false))
     }
   }
 
   return (
     <>
-      <Backdrop
+      <AnimatedBackdrop
         sx={{
           color: '#fff',
           zIndex: (theme) => theme.zIndex.drawer + 1
         }}
-        open={loading}
+        open={isSubmitting}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </AnimatedBackdrop>
 
       <Container maxWidth="sm">
         <Box sx={{ mt: 4, mb: 4 }}>
@@ -53,22 +74,24 @@ const PatentForm: React.FC<PatentFormProps> = ({ onSubmit }) => {
               <TextField
                 label="專利編號"
                 value={patentId}
-                onChange={(e) => setPatentId(e.target.value)}
+                onChange={(e) => dispatch(setPatentId(e.target.value))}
                 fullWidth
                 required
                 margin="normal"
                 variant="outlined"
+                disabled={isSubmitting}
                 sx={{ mb: 2 }}
               />
 
               <TextField
                 label="公司名稱"
                 value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                onChange={(e) => dispatch(setCompanyName(e.target.value))}
                 fullWidth
                 required
                 margin="normal"
                 variant="outlined"
+                disabled={isSubmitting}
                 sx={{ mb: 3 }}
               />
 
@@ -78,13 +101,14 @@ const PatentForm: React.FC<PatentFormProps> = ({ onSubmit }) => {
                 color="primary"
                 fullWidth
                 size="large"
+                disabled={isSubmitting}
                 sx={{
                   mt: 2,
                   py: 1.5,
                   fontWeight: 'bold'
                 }}
               >
-                提交
+                {isSubmitting ? '處理中...' : '提交'}
               </Button>
             </form>
           </Paper>

@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.rightBlock{
+.rightBlock {
   display: flex;
 }
 
@@ -22,7 +22,6 @@
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-
 }
 
 .navLink:hover {

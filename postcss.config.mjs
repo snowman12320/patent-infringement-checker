@@ -1,8 +1,6 @@
 /** @type {import('postcss-load-config').Config} */
 const config = {
-  plugins: {
-    // 移除 tailwindcss: {}
-  }
+  plugins: {}
 }
 
 export default config

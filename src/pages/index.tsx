@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import Navbar from '@/components/Navbar'
@@ -11,6 +12,10 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Patent infringement checker</title>
+      </Helmet>
+
       <Navbar />
       <div className={styles.homepageContainer}>
         <PatentForm />

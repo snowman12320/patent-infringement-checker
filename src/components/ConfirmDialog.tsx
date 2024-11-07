@@ -38,7 +38,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary" autoFocus>
-          確定
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>

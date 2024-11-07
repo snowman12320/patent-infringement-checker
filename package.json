@@ -16,11 +16,13 @@
     "@google/generative-ai": "^0.21.0",
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
+    "@reduxjs/toolkit": "^2.3.0",
     "axios": "^0.21.1",
     "dotenv": "^16.4.5",
     "next": "15.0.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",

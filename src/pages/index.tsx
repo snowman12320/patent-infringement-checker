@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAnalysis, setLoading, setError } from '@/store/patentSlice'
+import { RootState } from '@/store/store'
 import Navbar from '@/components/Navbar'
 import AnalysisResult from '@/components/AnalysisResult'
 import PatentForm from '@/components/PatentForm'
@@ -9,27 +12,16 @@ interface FormSubmitData {
   companyName: string;
 }
 
-interface Product {
-  product_name: string;
-  infringement_likelihood: 'High' | 'Moderate' | 'Low';
-  relevant_claims: string[];
-  explanation: string;
-  specific_features: string[];
-}
-
-interface Analysis {
-  patent_id: string;
-  company_name: string;
-  analysis_date: string;
-  top_infringing_products: Product[];
-  overall_risk_assessment: string;
-}
-
 const HomePage: React.FC = () => {
-  const [analysis, setAnalysis] = useState<Analysis | null>(null)
+  const dispatch = useDispatch()
+  const analysis = useSelector((state: RootState) => state.patent.analysis)
+  const [formKey, setFormKey] = useState(0)
 
   const handleFormSubmit = async ({ patentId, companyName }: FormSubmitData) => {
     try {
+      dispatch(setLoading(true))
+      dispatch(setError(null))
+
       const [patentsRes, companiesRes] = await Promise.all([
         fetch('/api/patents'),
         fetch('/api/companyProducts')
@@ -78,15 +70,19 @@ const HomePage: React.FC = () => {
       const analysisObject = JSON.parse(cleanedAnalysisResult)
       console.log(analysisObject)
 
-      setAnalysis({
+      dispatch(setAnalysis({
         ...analysisObject,
         patent_id: patentId,
         company_name: company.name,
         analysis_date: new Date().toISOString().split('T')[0]
-      })
+      }))
+
+      setFormKey(prev => prev + 1)
     } catch (error) {
       console.error(error)
-      // alert('An error occurred during the infringement check.')
+      dispatch(setError('An error occurred during the infringement check.'))
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 
@@ -94,7 +90,7 @@ const HomePage: React.FC = () => {
     <>
       <Navbar />
       <div className={styles.homepageContainer}>
-        <PatentForm onSubmit={handleFormSubmit} />
+        <PatentForm key={formKey} onSubmit={handleFormSubmit} />
         {analysis && <AnalysisResult analysis={analysis} />}
       </div>
     </>

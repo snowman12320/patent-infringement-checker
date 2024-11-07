@@ -75,7 +75,7 @@ const ReportsPage = () => {
                 >
                   <ListItemText
                     primary={`專利 ${report.patent_id} - ${report.company_name}`}
-                    secondary={`分析日期: ${new Date(report.analysis_date).toLocaleDateString('zh-TW')}`}
+                    secondary={`分析日期: ${new Date(report.analysis_date).toLocaleString('zh-TW', { hour12: false })}`}
                   />
                 </ListItem>
               ))}

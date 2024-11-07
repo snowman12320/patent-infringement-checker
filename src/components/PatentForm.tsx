@@ -92,7 +92,7 @@ const PatentForm: React.FC = () => {
         ...analysisObject,
         patent_id: patentId,
         company_name: company.name,
-        analysis_date: new Date().toISOString().split('T')[0]
+        analysis_date: new Date().toLocaleString('zh-TW', { hour12: false })
       }))
     } catch (error) {
       console.error(error)
@@ -131,12 +131,12 @@ const PatentForm: React.FC = () => {
         <Box sx={{ mt: 4, mb: 4 }}>
           <Paper elevation={3} sx={{ p: 4 }}>
             <Typography variant="h4" component="h1" gutterBottom align="center">
-              專利檢查表單
+              Patent Infringement Checker
             </Typography>
 
             <form onSubmit={handleSubmit}>
               <TextField
-                label="專利編號"
+                label="Patent ID"
                 value={patentId}
                 onChange={(e) => dispatch(setPatentId(e.target.value))}
                 fullWidth
@@ -148,7 +148,7 @@ const PatentForm: React.FC = () => {
               />
 
               <TextField
-                label="公司名稱"
+                label="Company Name"
                 value={companyName}
                 onChange={(e) => dispatch(setCompanyName(e.target.value))}
                 fullWidth

@@ -52,7 +52,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
       const reportWithId = {
         ...analysis,
         id: Date.now(),
-        savedAt: new Date().toISOString()
+        savedAt: new Date().toLocaleString('zh-TW', { hour12: false })
       }
       reports.push(reportWithId)
       localStorage.setItem('patentReports', JSON.stringify(reports))
@@ -95,7 +95,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
             <strong>公司名稱：</strong> {analysis.company_name}
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
-            <strong>分析日期：</strong> {new Date(analysis.analysis_date).toLocaleDateString('zh-TW')}
+            <strong>分析日期：</strong> {new Date(analysis.analysis_date).toLocaleString('zh-TW', { hour12: false })}
           </Typography>
         </Box>
 

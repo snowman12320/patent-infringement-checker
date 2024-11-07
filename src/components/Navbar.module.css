@@ -12,11 +12,17 @@
   align-items: center;
 }
 
+.rightBlock{
+  display: flex;
+  align-items: center;
+}
+
 .navLink {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  vertical-align:middle;
+  display: inline-block;
+  display: flex;
 }
 
 .navLink:hover {

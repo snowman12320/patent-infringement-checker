@@ -13,7 +13,7 @@ const Navbar = () => {
           <GavelIcon sx={{ mr: 1 }} />
           專利侵權檢查器
         </Link>
-        <div>
+        <div className={styles.rightBlock}>
           <Link href="/" className={styles.navLink}>
             <HomeIcon sx={{ mr: 1 }} />
             首頁

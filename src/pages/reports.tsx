@@ -51,28 +51,36 @@ const ReportsPage = () => {
           <Typography variant="h4" gutterBottom color="primary">
             歷史分析報告
           </Typography>
-          <List>
-            {reports.map((report) => (
-              <ListItem
-                key={report.id}
-                secondaryAction={
-                  <Box>
-                    <IconButton onClick={() => handleView(report)}>
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete(report.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                }
-              >
-                <ListItemText
-                  primary={`專利 ${report.patent_id} - ${report.company_name}`}
-                  secondary={`分析日期: ${new Date(report.analysis_date).toLocaleDateString('zh-TW')}`}
-                />
-              </ListItem>
-            ))}
-          </List>
+          {reports.length === 0
+            ? (
+            <Typography variant="body1" sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>
+              目前尚無儲存分析報告
+            </Typography>
+              )
+            : (
+            <List>
+              {reports.map((report) => (
+                <ListItem
+                  key={report.id}
+                  secondaryAction={
+                    <Box>
+                      <IconButton onClick={() => handleView(report)}>
+                        <VisibilityIcon />
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(report.id)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  }
+                >
+                  <ListItemText
+                    primary={`專利 ${report.patent_id} - ${report.company_name}`}
+                    secondary={`分析日期: ${new Date(report.analysis_date).toLocaleDateString('zh-TW')}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+              )}
         </Paper>
       </Container>
     </>

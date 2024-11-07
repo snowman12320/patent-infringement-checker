@@ -128,7 +128,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ analysis }) => {
                   </Typography>
 
                   <Typography variant="body1" paragraph>
-                    <strong>��明：</strong>
+                    <strong>說明：</strong>
                     {product.explanation}
                   </Typography>
 

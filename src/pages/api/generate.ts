@@ -39,8 +39,8 @@ export default async function handler (
 
         Output Example
         Infringement Analysis output
-        just give result object data like output object and not use json code block
-        Please use the product name mentioned in the ${req.body.company_products} data, with the analysis_id as a UUID. Both top_infringing_products and overall_risk_assessment are required.
+        just give result object data like output object and not use json code block.
+        please enter the full product name from ${req.body.company_products.products} into the product_name field without adding any extra words. Ensure that the product name is included in ${req.body.company_products.products}.
 
         output:{
         "analysis_id": ${uuidv4()},

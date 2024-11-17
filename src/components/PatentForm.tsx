@@ -15,8 +15,7 @@ import {
   CircularProgress,
   styled
 } from '@mui/material'
-import { fetchGeneratedContent } from '@/utils/gemini'
-import { fetchChatGPTContent } from '@/utils/chatGPT'
+import { fetchGeminiContent, fetchChatGPTContent, fetchClaudeContent } from '@/utils/aiModel'
 import ConfirmDialog from '@/components/ConfirmDialog'
 
 const AnimatedBackdrop = styled(Backdrop)`
@@ -83,9 +82,11 @@ const PatentForm: React.FC = () => {
 
       let analysisObject
       if (model === 'gemini') {
-        analysisObject = await fetchGeneratedContent(requestData)
-      } else {
+        analysisObject = await fetchGeminiContent(requestData)
+      } else if (model === 'chatgpt') {
         analysisObject = await fetchChatGPTContent(requestData)
+      } else {
+        analysisObject = await fetchClaudeContent(requestData)
       }
 
       dispatch(setAnalysis({
@@ -173,8 +174,9 @@ const PatentForm: React.FC = () => {
                   native: true
                 }}
               >
-                <option value="gemini">Gemini</option>
-                <option value="chatgpt">ChatGPT</option>
+                <option value="gemini">Gemini (1.5pro)</option>
+                <option value="chatgpt">ChatGPT (4o-mini)</option>
+                <option value="claude">Claude (3-5-haiku-20241022)</option>
               </TextField>
 
               <Button

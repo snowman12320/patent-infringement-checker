@@ -34,7 +34,7 @@ export default async function handler (
       **Data**
 
       - patent_claims:${req.body.patent_claims}
-      - company_products: ${req.body.company_products}
+      - company_products: ${JSON.stringify(req.body.company_products)}
 
       **Instructions**
 
@@ -87,7 +87,7 @@ export default async function handler (
         content: [
           {
             type: 'text',
-            text: `${prompt}`
+            text: prompt
           }
         ]
       }],

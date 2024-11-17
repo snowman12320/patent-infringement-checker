@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Anthropic from '@anthropic-ai/sdk'
+
+const anthropic = new Anthropic({
+  apiKey: process.env.CLAUDE_API_KEY
+})
 
 export default async function handler (
   req: NextApiRequest,
@@ -17,9 +21,6 @@ export default async function handler (
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
-
     const prompt = `
       The app will allow users to:
 
@@ -38,13 +39,13 @@ export default async function handler (
 
       - patent_claims:${req.body.patent_claims}
       - company_products: ${JSON.stringify(req.body.company_products)}
-
       **Instructions**
 
       - Generate an infringement analysis output.
       - Provide the result as an object or JSON file only, without any extra text or JSON code blocks.
-      - Please enter the full product name from  ${req.body.company_products.products} into the product_name field without adding any extra words.
       - Ensure that the product name is exactly as listed in ${req.body.company_products.products}.
+
+      **Expected Output
 
       **Expected Output Format**
 
@@ -79,11 +80,28 @@ export default async function handler (
       }
     `
 
-    const result = await model.generateContent(prompt)
-    const response = await result.response
-    const responseText = await response.text()
+    const response = await anthropic.messages.create({
+      model: 'claude-3-5-haiku-20241022',
+      max_tokens: 1000,
+      temperature: 0,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'text',
+              text: prompt
+            }
+          ]
+        }
+      ]
+    })
 
-    return res.status(200).json(responseText)
+    if (!response) {
+      throw new Error('Failed to generate content')
+    }
+
+    return res.status(200).json((response.content[0] as { text: string }).text)
   } catch (error) {
     console.error('API error:', error)
     return res.status(500).json({ error: 'Failed to generate content' })

@@ -27,3 +27,38 @@
 .navLink:hover {
   color: #ccc;
 }
+
+.menuIcon {
+  display: none;
+  cursor: pointer;
+}
+
+.showMenu {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .menuIcon {
+    display: block;
+  }
+
+  .rightBlock {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #1a1a1a; 
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .navLink {
+    padding: 10px;
+    color: white; 
+  }
+
+  .showMenu {
+    display: flex;
+  }
+}

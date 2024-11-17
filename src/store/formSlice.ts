@@ -7,8 +7,8 @@ interface FormState {
 }
 
 const initialState: FormState = {
-  patentId: 'US-11950528-B2',
-  companyName: 'Husqvarna',
+  patentId: '',
+  companyName: '',
   isSubmitting: false
 }
 

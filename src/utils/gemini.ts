@@ -5,7 +5,7 @@ export async function fetchGeneratedContent (prompt: {
   company_products: string
 }) {
   try {
-    const res = await fetch('/api/generate', {
+    const res = await fetch('/api/geminiGenerate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

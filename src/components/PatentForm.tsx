@@ -155,12 +155,12 @@ const PatentForm: React.FC = () => {
                 type="submit"
                 variant="contained"
                 sx={{
-                  backgroundColor: '#57dc2f', // 修改這行
+                  backgroundColor: '#57dc2f',
                   mt: 2,
                   py: 1.5,
                   fontWeight: 'bold',
                   '&:hover': {
-                    backgroundColor: '#45b824' // 修改這行
+                    backgroundColor: '#45b824'
                   }
                 }}
                 fullWidth

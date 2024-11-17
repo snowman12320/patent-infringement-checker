@@ -44,9 +44,6 @@ dependencies:
   react-redux:
     specifier: ^9.1.2
     version: 9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1)
-  uuid:
-    specifier: ^11.0.2
-    version: 11.0.2
 
 devDependencies:
   '@types/node':
@@ -3622,11 +3619,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.3.1
-    dev: false
-
-  /uuid@11.0.2:
-    resolution: {integrity: sha512-14FfcOJmqdjbBPdDjFQyk/SdT4NySW4eM0zcG+HqbHP5jzuH56xO3J1DGhgs/cEMCfwYi3HQI1gnTO62iaG+tQ==}
-    hasBin: true
     dev: false
 
   /which-boxed-primitive@1.0.2:

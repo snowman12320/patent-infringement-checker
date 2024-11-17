@@ -16,6 +16,7 @@ import {
   styled
 } from '@mui/material'
 import { fetchGeneratedContent } from '@/utils/gemini'
+import { fetchChatGPTContent } from '@/utils/chatGPT'
 import ConfirmDialog from '@/components/ConfirmDialog'
 
 const AnimatedBackdrop = styled(Backdrop)`
@@ -39,6 +40,7 @@ const PatentForm: React.FC = () => {
   const { patentId, companyName, isSubmitting } = useSelector((state: RootState) => state.form)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogMessage, setDialogMessage] = useState('')
+  const [model, setModel] = useState('chatgpt')
 
   const handleFormSubmit = async ({ patentId, companyName }: { patentId: string, companyName: string }) => {
     try {
@@ -79,7 +81,12 @@ const PatentForm: React.FC = () => {
         company_products: company.products
       }
 
-      const analysisObject = await fetchGeneratedContent(requestData)
+      let analysisObject
+      if (model === 'gemini') {
+        analysisObject = await fetchGeneratedContent(requestData)
+      } else {
+        analysisObject = await fetchChatGPTContent(requestData)
+      }
 
       dispatch(setAnalysis({
         ...analysisObject,
@@ -151,6 +158,25 @@ const PatentForm: React.FC = () => {
                 sx={{ mb: 3 }}
               />
 
+              <TextField
+                select
+                label="Model"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+                fullWidth
+                required
+                margin="normal"
+                variant="outlined"
+                disabled={isSubmitting}
+                sx={{ mb: 3 }}
+                SelectProps={{
+                  native: true
+                }}
+              >
+                <option value="gemini">Gemini</option>
+                <option value="chatgpt">ChatGPT</option>
+              </TextField>
+
               <Button
                 type="submit"
                 variant="contained"
@@ -180,7 +206,7 @@ const PatentForm: React.FC = () => {
         content={dialogMessage}
         onClose={() => setDialogOpen(false)}
       />
-    </>
+      </>
   )
 }
 

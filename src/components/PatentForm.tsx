@@ -177,7 +177,7 @@ const PatentForm: React.FC = () => {
                 }}
               >
                 <option value="gemini">Gemini (1.5pro)</option>
-                <option value="chatgpt">ChatGPT (4o-mini)</option>
+                <option value="chatgpt">ChatGPT (4o-mini) (✦Recommend)</option>
                 <option value="claude">Claude (3-5-haiku-20241022)</option>
                 <option value="grok">Grok (beta)</option>
               </TextField>

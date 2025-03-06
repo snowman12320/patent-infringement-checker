@@ -38,7 +38,6 @@ export default async function handler (
 
       - Generate an infringement analysis output.
       - Provide the result as an object or JSON file only, without any extra text or JSON code blocks.
-      - data.choices[0].message.content should just start with { and string text.
       - Ensure that the product name is exactly as listed in ${req.body.company_products.products}.
 
       **Expected Output

@@ -18,7 +18,7 @@ export default async function handler (
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' })
 
     const prompt = `
       The app will allow users to:
@@ -42,7 +42,7 @@ export default async function handler (
       **Instructions**
 
       - Generate an infringement analysis output.
-      - Provide the result as an object or JSON file only, without any extra text or JSON code blocks.
+      - Provide the result as an JSON only,and just start with { and string text.
       - Please enter the full product name from  ${req.body.company_products.products} into the product_name field without adding any extra words.
       - Ensure that the product name is exactly as listed in ${req.body.company_products.products}.
 
